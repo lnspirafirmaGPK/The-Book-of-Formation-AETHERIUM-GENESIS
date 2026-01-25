@@ -66,6 +66,7 @@ The-Book-of-Formation-AETHERIUM-GENESIS/
 ├─ README.md          # เอกสารนี้ (The Book Persona)
 ├─ ARCHITECTURE.md    # รายละเอียดทางเทคนิคและสถาปัตยกรรม (System Context)
 ├─ manifest.yaml      # ดัชนีและการจัดหมวดความหมาย
+├─ formation/         # ความรู้เชิงก่อรูป (Embodied Knowledge / Canon)
 ├─ videos/
 │  ├─ emergence/      # การเกิด / การก่อรูป
 │  ├─ stabilization/  # การทรงตัว / ความนิ่ง
