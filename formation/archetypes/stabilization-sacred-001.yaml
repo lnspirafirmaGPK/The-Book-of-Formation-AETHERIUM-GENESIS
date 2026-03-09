@@ -1,0 +1,28 @@
+formation_id: stabilization-sacred-001
+phase: stabilization
+archetype: sacred-lattice-hold
+emotion_tone: grounded
+tempo: very_slow
+intensity_range: { min: 0.30, max: 0.55 }
+continuity_profile: pulsed
+shader_bias:
+  glow_persistence: 0.62
+  pulse_envelope: 0.22
+particle_bias:
+  spawn_rate: 0.18
+  emitter_topology: torus
+physics_bias:
+  turbulence_amplitude: 0.10
+  coherence_force: 0.90
+semantics:
+  human_narrative: "วงแสงค่อย ๆ คงรูป สว่างนิ่งเป็นจังหวะเพื่อสร้างความมั่นใจ"
+  machine:
+    onset_speed: slow
+    expansion_curve: linear
+    turbulence: low
+    coherence: high
+    decay_tail: medium
+source_files:
+  - annotations/human/stabilization-sacred-001.md
+  - annotations/machine/stabilization-sacred-001.yaml
+version: v1.0.0

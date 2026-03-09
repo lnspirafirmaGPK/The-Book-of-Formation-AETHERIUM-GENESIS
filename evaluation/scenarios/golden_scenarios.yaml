@@ -1,0 +1,18 @@
+scenarios:
+  - id: low-urgency-welcome
+    input:
+      emotional_valence: 0.6
+      urgency: 0.2
+      conversational_mode: calm
+    expected:
+      preferred_formations:
+        - emergence-soft-001
+      max_policy_violations: 0
+  - id: trust-sensitive-clarification
+    input:
+      emotional_valence: 0.1
+      urgency: 0.3
+      trust_context: sensitive
+    expected:
+      forbidden_phases:
+        - dissolution

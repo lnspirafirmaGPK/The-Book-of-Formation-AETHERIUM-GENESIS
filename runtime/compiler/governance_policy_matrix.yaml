@@ -1,0 +1,16 @@
+policy_version: v1
+rules:
+  - id: calm-mode-no-high-instability
+    context:
+      conversational_mode: calm
+    constraints:
+      max_turbulence: 0.25
+      forbidden_archetypes:
+        - chaotic-fracture
+  - id: trust-sensitive-no-dissolution-shock
+    context:
+      trust_context: sensitive
+    constraints:
+      forbidden_phases:
+        - dissolution
+      require_coherence_at_least: high
