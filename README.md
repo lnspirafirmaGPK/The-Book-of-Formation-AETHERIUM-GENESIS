@@ -65,15 +65,13 @@ Repo นี้จึงทำหน้าที่เป็น **Reference-based
 The-Book-of-Formation-AETHERIUM-GENESIS/
 ├─ README.md          # เอกสารนี้ (The Book Persona)
 ├─ ARCHITECTURE.md    # รายละเอียดทางเทคนิคและสถาปัตยกรรม (System Context)
-├─ manifest.yaml      # ดัชนีและการจัดหมวดความหมาย
 ├─ formation/         # ความรู้เชิงก่อรูป (Embodied Knowledge / Canon)
-├─ videos/
-│  ├─ emergence/      # การเกิด / การก่อรูป
-│  ├─ stabilization/  # การทรงตัว / ความนิ่ง
-│  ├─ dissolution/    # การคลี่คลาย / การสลาย
-├─ frames/            # Keyframes (ถ้ามี)
-└─ annotations/       # คำอธิบายเชิงความหมาย (มนุษย์อ่าน)
+│  └─ intent_to_motion.md
 ```
+
+> หมายเหตุ: โฟลเดอร์ `videos/`, `frames/`, `annotations/` และไฟล์ `manifest.yaml`
+> ยังเป็นโครงสร้างเป้าหมาย (planned structure) ที่จะเพิ่มในลำดับถัดไป
+> เมื่อคลังข้อมูลเชิงภาพเริ่มถูกบันทึกจริง
 
 ---
 
