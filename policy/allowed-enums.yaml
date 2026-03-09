@@ -1,0 +1,31 @@
+# Controlled Vocabulary and Enum Definitions
+archetypes:
+  - soft_emergence
+  - sacred_stabilization
+  - whisper_dissolution
+  - vibrant_pulse
+  - structural_unity
+  - cosmic_dust
+
+curves:
+  onset: [sigmoid_soft, linear, exponential_in, inhale]
+  expansion: [radial_out, spiral, oscillate, inhale]
+  decay: [lingering_fade, abrupt, bounce, exhale]
+
+phases:
+  - emergence
+  - stabilization
+  - dissolution
+
+tempos:
+  - static
+  - slow
+  - moderate
+  - fast
+  - dynamic
+
+asset_roles:
+  - primary_reference
+  - keyframe
+  - analysis_note
+  - placeholder

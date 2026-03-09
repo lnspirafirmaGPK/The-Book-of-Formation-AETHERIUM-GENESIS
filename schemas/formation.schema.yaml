@@ -1,80 +1,77 @@
-$schema: "https://json-schema.org/draft/2020-12/schema"
-$id: "https://aetherium.local/schemas/formation.schema.yaml"
-title: Formation Definition
+# Formation Definition Schema
+# Purpose: Define the core structure for a Motion Archetype in The Book of Formation.
 type: object
 required:
   - formation_id
-  - phase
-  - archetype
-  - emotion_tone
-  - tempo
-  - intensity_range
-  - continuity_profile
-  - shader_bias
-  - particle_bias
-  - physics_bias
-  - semantics
-  - source_files
   - version
+  - status
+  - title
+  - metadata
+  - semantic_profile
+  - narrative
+  - lineage
+  - source_references
 properties:
   formation_id:
     type: string
-    pattern: "^[a-z0-9-]+$"
-  phase:
-    type: string
-    enum: [emergence, stabilization, dissolution]
-  archetype:
-    type: string
-  emotion_tone:
-    type: string
-  tempo:
-    type: string
-    enum: [very_slow, slow, medium, fast, very_fast]
-  intensity_range:
-    type: object
-    required: [min, max]
-    properties:
-      min: { type: number, minimum: 0, maximum: 1 }
-      max: { type: number, minimum: 0, maximum: 1 }
-  continuity_profile:
-    type: string
-    enum: [continuous, pulsed, intermittent]
-  shader_bias:
-    type: object
-    additionalProperties: { type: number }
-  particle_bias:
-    type: object
-    additionalProperties: { type: number }
-  physics_bias:
-    type: object
-    additionalProperties: { type: number }
-  semantics:
-    type: object
-    required: [human_narrative, machine]
-    properties:
-      human_narrative: { type: string }
-      machine:
-        type: object
-        required: [onset_speed, expansion_curve, turbulence, coherence, decay_tail]
-        properties:
-          onset_speed: { type: string, enum: [slow, medium, fast] }
-          expansion_curve: { type: string, enum: [linear, sigmoid, exponential] }
-          turbulence: { type: string, enum: [low, medium, high] }
-          coherence: { type: string, enum: [low, medium, high] }
-          decay_tail: { type: string, enum: [short, medium, long] }
-  source_files:
-    type: array
-    items: { type: string }
-  author_note:
-    type: string
-  provenance:
-    type: object
-    properties:
-      parent_formation_id: { type: string }
-      commit: { type: string }
-      created_by: { type: string }
-      created_at: { type: string, format: date-time }
+    description: "Stable identity (e.g., emergence-soft-001)"
   version:
     type: string
-    pattern: "^v[0-9]+\\.[0-9]+\\.[0-9]+$"
-additionalProperties: false
+    description: "Semantic revision (e.g., 1.0.0)"
+  status:
+    type: string
+    enum: [draft, review, canonical, deprecated, archived]
+  title:
+    type: object
+    required: [en, th]
+    properties:
+      en: { type: string }
+      th: { type: string }
+  metadata:
+    type: object
+    required: [phase, archetype]
+    properties:
+      phase: { type: string, enum: [emergence, stabilization, dissolution] }
+      archetype: { type: string }
+      emotion_tone: { type: string }
+      tempo: { type: string, enum: [static, slow, moderate, fast, dynamic] }
+      intensity_range: { type: array, items: { type: number, minimum: 0, maximum: 1 }, minItems: 2, maxItems: 2 }
+  semantic_profile:
+    type: object
+    description: "Normalized Machine-readable parameters (0.0 - 1.0)"
+    properties:
+      onset_speed: { type: number, minimum: 0, maximum: 1 }
+      expansion_rate: { type: number, minimum: 0, maximum: 1 }
+      coherence: { type: number, minimum: 0, maximum: 1 }
+      turbulence: { type: number, minimum: 0, maximum: 1 }
+      luminosity_persistence: { type: number, minimum: 0, maximum: 1 }
+      decay_tail: { type: number, minimum: 0, maximum: 1 }
+      volatility: { type: number, minimum: 0, maximum: 1 }
+      curves:
+        type: object
+        properties:
+          onset_curve: { type: string }
+          expansion_curve: { type: string }
+          decay_curve: { type: string }
+  narrative:
+    type: object
+    required: [th]
+    properties:
+      th: { type: string, description: "Poetic Thai description" }
+      en: { type: string, description: "Technical/narrative English summary" }
+  lineage:
+    type: object
+    properties:
+      derived_from: { type: string }
+      inspired_by: { type: array, items: { type: string } }
+      variant_of: { type: string }
+      supersedes: { type: string }
+  source_references:
+    type: array
+    items:
+      type: object
+      required: [path, role]
+      properties:
+        path: { type: string }
+        role: { type: string, enum: [primary_reference, keyframe, analysis_note, placeholder] }
+        status: { type: string, enum: [available, planned, placeholder] }

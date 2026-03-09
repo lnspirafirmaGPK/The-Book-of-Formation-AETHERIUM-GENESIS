@@ -1,0 +1,48 @@
+name: Validate Knowledge Codex
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install pyyaml jsonschema
+
+      - name: Validate Formations against Schema
+        run: |
+          python3 -c "
+          import yaml, json, jsonschema, os
+          with open('schemas/formation.schema.yaml', 'r') as f:
+              schema = yaml.safe_load(f)
+          for filename in os.listdir('formations'):
+              if filename.endswith('.yaml'):
+                  with open(os.path.join('formations', filename), 'r') as f:
+                      instance = yaml.safe_load(f)
+                  jsonschema.validate(instance=instance, schema=schema)
+                  print(f'✓ {filename} is valid.')
+          "
+
+      - name: Validate Manifest Integrity
+        run: |
+          python3 -c "
+          import yaml, os
+          with open('manifest/formations.index.yaml', 'r') as f:
+              manifest = yaml.safe_load(f)
+          for entry in manifest['formations']:
+              if not os.path.exists(entry['path']):
+                  print(f\"✗ Path {entry['path']} does not exist.\")
+                  exit(1)
+          print('✓ Manifest integrity check passed.')
+          "

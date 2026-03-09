@@ -8,136 +8,73 @@
 
 ## บทนำ (Introduction)
 
-**The Book of Formation** คือคลังความรู้ส่วนกลาง (Central Codex)
-ที่บันทึก “รูปแบบการก่อกำเนิด การเคลื่อนไหว และการคลี่คลายของแสง”
-ในรูปแบบของ **ภาพ วิดีโอ และคำอธิบายเชิงความหมาย**
+**The Book of Formation** คือคลังความรู้ส่วนกลาง (Central Codex) ที่บันทึก “รูปแบบการก่อกำเนิด การเคลื่อนไหว และการคลี่คลายของแสง” ในรูปแบบของ **Semantic Manifests, Annotations, และ Technical Specifications**
 
-Repo นี้ไม่ใช่ dataset สำหรับการ train โมเดลแบบดั้งเดิม
-และไม่ใช่ asset สำหรับงานกราฟิกทั่วไป
-
-แต่เป็น **ตำราของร่างกาย (Embodied Knowledge)**
-ที่ระบบ AI หลักของแพลตฟอร์ม **AETHERIUM · GENESIS**
-ใช้เป็นแหล่งอ้างอิงเพื่อ “เข้าใจว่าควรแสดงออกอย่างไร”
+Repo นี้ทำหน้าที่เป็น **Canonical Knowledge Repository** ที่ระบบ AI หลักของแพลตฟอร์ม **AETHERIUM · GENESIS** ใช้เป็นแหล่งอ้างอิงเพื่อ “เข้าใจว่าควรแสดงออกอย่างไร” ผ่านโครงสร้างข้อมูลที่เครื่องอ่านได้ (Machine-readable) และภาษามนุษย์ที่สละสลวย (Poetic Narrative)
 
 ---
 
-## ปัญหาที่ตำรานี้แก้ไข
+## โครงสร้างระบบ (System Structure)
 
-ระบบ AI สามารถ:
-- สนทนาได้
-- วิเคราะห์เจตนาได้
-- ควบคุมพารามิเตอร์ทางฟิสิกส์และกราฟิกได้
+### 1. Formation Manifest System
+ดัชนีเชิงความหมายของทั้งคลัง บันทึก ID, Version, และ Metadata สำคัญของแต่ละ Motion Archetype
+- `manifest/formations.index.yaml`: รายการ Formation ทั้งหมด
+- `manifest/lineage.index.yaml`: บันทึกสายสัมพันธ์และการสืบทอด (Derivation/Variant)
 
-แต่ยังขาดสิ่งสำคัญหนึ่งอย่าง คือ
+### 2. Annotation & Embodied Semantics
+ชั้นคำอธิบายสองระดับที่เชื่อมโยงความรู้สึกเข้ากับพารามิเตอร์
+- **Human Narrative**: คำบรรยายภาษามนุษย์ (Poetic Thai) เช่น “แสงค่อย ๆ รวบตัวเหมือนลมหายใจแรก”
+- **Machine Semantics**: พารามิเตอร์ที่ Normalize (0.0 - 1.0) สำหรับระบบ Runtime
 
-> **ความเข้าใจเชิงประสบการณ์ของการเกิดแสงในโลกที่มนุษย์รับรู้**
-
-ภาษาสอนให้ AI รู้ว่า “อะไรคืออะไร”
-แต่ **การเคลื่อนไหวของแสง** ต้องอาศัย
-- เวลา (Temporal)
-- การเปลี่ยนผ่าน (Transition)
-- จังหวะ (Rhythm)
-- ความหนักเบา (Intensity)
-
-The Book of Formation ถูกสร้างขึ้นเพื่อเติมช่องว่างนี้
+### 3. Governance & Policy Matrix
+กฎเกณฑ์การใช้งาน Archetype ในแต่ละสภาวะ (Internal State) และการควบคุมความปลอดภัย (Safety Overlay)
+- `policy/formation-policy-matrix.yaml`: ข้อกำหนดการเลือกใช้ตามบริบท
+- `policy/review-checklist.yaml`: มาตรฐานการตรวจสอบข้อมูลก่อนเข้าสู่คลัง
 
 ---
 
-## แนวคิดหลัก (Core Philosophy)
-
-- แสงไม่ใช่ Output
-  แต่เป็น **การแสดงออก (Expression)**
-
-- วิดีโอไม่ใช่ข้อมูลดิบ
-  แต่เป็น **ความทรงจำของการเคลื่อนไหว**
-
-- AI ไม่จำเป็นต้อง “ดูทุกเฟรม”
-  แต่ต้องรู้ว่า
-  > “หากจะเกิดแบบนี้ การเคลื่อนไหวโดยรวมควรเป็นอย่างไร”
-
-Repo นี้จึงทำหน้าที่เป็น **Reference-based Embodied Memory**
-
----
-
-## โครงสร้าง Repository (Structure)
+## สถาปัตยกรรม Repository (Repository Architecture)
 
 ```text
 The-Book-of-Formation-AETHERIUM-GENESIS/
-├─ README.md
-├─ ARCHITECTURE.md
-├─ schemas/                    # schema ของ manifest/formation/annotation
-├─ manifest/                   # ดัชนี formation + lineage
-├─ formation/                  # canonical archetypes + templates
-├─ annotations/                # human + machine-readable semantics
-├─ runtime/                    # retrieval/compiler/adapter specs + governance matrix
-├─ evaluation/                 # golden scenarios + metric spec
-├─ studio/preview-spec/        # preview studio contract
-└─ .github/                    # PR template + schema validation workflow
+├─ schemas/           # JSON/YAML Schemas สำหรับ Validation
+├─ manifest/          # ดัชนีกลางและ Lineage Registry
+├─ formations/        # ข้อมูล Formation (YAML) ตามมาตรฐาน Codex
+├─ annotations/       # คำอธิบายเชิงลึก (Human & Machine layers)
+├─ policy/            # กฎเกณฑ์ Governance และ Matrix การใช้งาน
+├─ specs/             # Technical Contracts (Compiler, Retrieval, Adapter)
+├─ examples/          # ตัวอย่างการเขียนข้อมูลที่ถูกต้อง
+└─ .github/workflows/ # ระบบ Content Validation อัตโนมัติ
 ```
 
-โครงสร้างนี้ถูกเพิ่มเพื่อให้ตำราสามารถใช้งานเชิงระบบได้จริง:
-- query ได้ด้วย manifest เชิงโครงสร้าง
-- map ภาษาศิลป์สู่ runtime parameter ผ่าน semantic layer
-- รองรับ retrieval/compile/governance/evaluation pipeline แบบตรวจสอบย้อนกลับได้
+---
+
+## การนำไปใช้งาน (How to Use as a Developer)
+
+Repository นี้เป็น **Knowledge Layer** (ไม่มี executable logic ของ runtime) ระบบภายนอกสามารถเชื่อมต่อได้ผ่าน Technical Contracts ในโฟลเดอร์ `specs/`:
+
+1. **Retrieval Engine**: ใช้เพื่อค้นหา Archetype ที่เหมาะสมจาก Intent Vector
+2. **Formation Compiler**: แปลง Semantic Profile ไปเป็น Shader/Physics Bias
+3. **AetherBus Adapter**: ห่อหุ้ม Payload เพื่อส่งต่อในระบบ Secure Channel
 
 ---
 
-## การใช้งาน (How This Is Used)
+## หลักการในการเพิ่มเนื้อหา (Ingestion Principles)
 
-ระบบ AI หลักของ AETHERIUM · GENESIS จะ:
-
-1. วิเคราะห์เจตนา (Intent / Internal State)
-2. ระบุรูปแบบการแสดงออกที่เหมาะสม
-3. อ้างอิงตำรานี้เพื่อเลือก **Motion Archetype**
-4. แปลงเป็น Bias ของ
-   - Physics Parameters
-   - Shader Logic
-   - Particle Behavior
-
-ตำรานี้ **ไม่ถูกเรียกใช้ตลอดเวลา**
-แต่จะถูกอ้างอิงเมื่อระบบต้อง “ตัดสินใจเชิงการเคลื่อนไหว”
-
-*หมายเหตุ: สำหรับรายละเอียดทางเทคนิคเกี่ยวกับวิธีการเชื่อมต่อและการทำงานของ AetherBus โปรดดูที่ `ARCHITECTURE.md`*
-
----
-
-## สิ่งที่ตำรานี้ไม่ใช่
-
-- ❌ ไม่ใช่ training dataset
-- ❌ ไม่ใช่ prompt library
-- ❌ ไม่ใช่ asset store
-- ❌ ไม่ใช่คู่มือ UX ทั่วไป
-
-แต่เป็น:
-> ✅ หนังสือเรียนของ “ร่างกายแสง”
-
----
-
-## หลักการในการเพิ่มเนื้อหา
-
-เมื่อเพิ่มภาพหรือวิดีโอใหม่:
-- ไม่จำเป็นต้องสวย
-- ไม่จำเป็นต้องสมบูรณ์
-- แต่ต้อง **สื่อความรู้สึกของการเปลี่ยนผ่าน**
-
-คำอธิบายควรเขียนในภาษามนุษย์
-เหมือนกำลังอธิบายให้ใครบางคน “รู้สึก” มากกว่า “คำนวณ”
+การเพิ่ม Formation ใหม่ต้องผ่านขั้นตอนดังนี้:
+1. **Schema Compliance**: ข้อมูลต้องตรงตาม `schemas/formation.schema.yaml`
+2. **Language Strategy**:
+   - *English*: สำหรับ Machine-facing fields และ Technical keys
+   - *Thai*: สำหรับ Narrative fields และ Poetic descriptions
+3. **Semantic Normalization**: ค่าพารามิเตอร์ต้องอยู่ในช่วง [0.0 - 1.0] เสมอ
+4. **Governance Review**: ผ่านการตรวจสอบตาม `policy/review-checklist.yaml`
 
 ---
 
 ## สถานะโครงการ
-
-โครงการนี้เป็นส่วนหนึ่งของระบบหลัก
-**AETHERIUM · GENESIS**
-
-และจะพัฒนาไปพร้อมกับ
-- Generative UI
-- Dialogue-driven Morphing
-- Embodied AI Architecture
+โครงการนี้เป็นส่วนหนึ่งของระบบหลัก **AETHERIUM · GENESIS** และทำหน้าที่เป็น "สมองส่วนความทรงจำแห่งแสง" สำหรับ Generative UI และ Embodied AI
 
 ---
 
-> “แสงไม่จำเป็นต้องถูกสั่ง
-> แต่ต้องถูกเข้าใจ”
-
-— The Book of Formation
+> “แสงไม่จำเป็นต้องถูกสั่ง แต่ต้องถูกเข้าใจ”
+> — The Book of Formation

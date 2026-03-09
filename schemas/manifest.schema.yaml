@@ -1,45 +1,30 @@
-$schema: "https://json-schema.org/draft/2020-12/schema"
-$id: "https://aetherium.local/schemas/manifest.schema.yaml"
-title: Formations Manifest
+# Global Manifest Schema
+# Purpose: Index and relationship tracking for all formations in the repository.
 type: object
-required: [manifest_version, generated_at, formations]
+required:
+  - repository_name
+  - last_updated
+  - formations
+  - lineage_registry
 properties:
-  manifest_version:
-    type: string
-  generated_at:
-    type: string
-    format: date-time
+  repository_name: { type: string }
+  last_updated: { type: string, format: date-time }
   formations:
     type: array
     items:
       type: object
-      required: [formation_id, phase, archetype, version, source_files]
+      required: [formation_id, path, status, version]
       properties:
         formation_id: { type: string }
-        phase: { type: string, enum: [emergence, stabilization, dissolution] }
-        archetype: { type: string }
-        emotion_tone: { type: string }
-        tempo: { type: string }
-        intensity_range:
-          type: object
-          required: [min, max]
-          properties:
-            min: { type: number }
-            max: { type: number }
-        continuity_profile: { type: string }
-        shader_bias:
-          type: object
-          additionalProperties: { type: number }
-        particle_bias:
-          type: object
-          additionalProperties: { type: number }
-        physics_bias:
-          type: object
-          additionalProperties: { type: number }
-        source_files:
-          type: array
-          items: { type: string }
-        author_note: { type: string }
-        provenance: { type: object }
+        path: { type: string }
+        status: { type: string }
         version: { type: string }
-additionalProperties: false
+  lineage_registry:
+    type: array
+    items:
+      type: object
+      required: [source_id, relation, target_id]
+      properties:
+        source_id: { type: string }
+        relation: { type: string, enum: [derived_from, variant_of, supersedes] }
+        target_id: { type: string }

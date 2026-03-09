@@ -1,30 +1,31 @@
-$schema: "https://json-schema.org/draft/2020-12/schema"
-$id: "https://aetherium.local/schemas/annotation.schema.yaml"
-title: Formation Annotation
+# Annotation Schema
+# Purpose: Dual-layer semantics for human-narrative and machine-readable mapping.
 type: object
 required:
   - formation_id
   - human_narrative
   - machine_semantics
 properties:
-  formation_id:
-    type: string
+  formation_id: { type: string }
   human_narrative:
-    type: object
-    required: [language, text]
-    properties:
-      language: { type: string }
-      text: { type: string }
+    type: array
+    items:
+      type: object
+      required: [timestamp, note_th]
+      properties:
+        timestamp: { type: string, description: "e.g., 00:00:05" }
+        note_th: { type: string }
+        note_en: { type: string }
   machine_semantics:
-    type: object
-    required: [onset_speed, expansion_curve, turbulence, coherence, decay_tail]
-    properties:
-      onset_speed: { type: string, enum: [slow, medium, fast] }
-      expansion_curve: { type: string, enum: [linear, sigmoid, exponential] }
-      turbulence: { type: string, enum: [low, medium, high] }
-      coherence: { type: string, enum: [low, medium, high] }
-      decay_tail: { type: string, enum: [short, medium, long] }
-      notes:
-        type: array
-        items: { type: string }
-additionalProperties: false
+    type: array
+    items:
+      type: object
+      required: [timestamp, parameters]
+      properties:
+        timestamp: { type: string }
+        parameters:
+          type: object
+          properties:
+            normalized_intensity: { type: number, minimum: 0, maximum: 1 }
+            active_vectors: { type: array, items: { type: string } }
+            trigger_events: { type: array, items: { type: string } }
