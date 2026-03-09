@@ -1,0 +1,12 @@
+formation_id: <formation-id>
+human_narrative:
+  language: th
+  text: "<human expressive description>"
+machine_semantics:
+  onset_speed: slow
+  expansion_curve: sigmoid
+  turbulence: low
+  coherence: high
+  decay_tail: long
+  notes:
+    - "<normalization note>"

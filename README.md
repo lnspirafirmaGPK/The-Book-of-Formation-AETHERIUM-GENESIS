@@ -63,15 +63,22 @@ Repo นี้จึงทำหน้าที่เป็น **Reference-based
 
 ```text
 The-Book-of-Formation-AETHERIUM-GENESIS/
-├─ README.md          # เอกสารนี้ (The Book Persona)
-├─ ARCHITECTURE.md    # รายละเอียดทางเทคนิคและสถาปัตยกรรม (System Context)
-├─ formation/         # ความรู้เชิงก่อรูป (Embodied Knowledge / Canon)
-│  └─ intent_to_motion.md
+├─ README.md
+├─ ARCHITECTURE.md
+├─ schemas/                    # schema ของ manifest/formation/annotation
+├─ manifest/                   # ดัชนี formation + lineage
+├─ formation/                  # canonical archetypes + templates
+├─ annotations/                # human + machine-readable semantics
+├─ runtime/                    # retrieval/compiler/adapter specs + governance matrix
+├─ evaluation/                 # golden scenarios + metric spec
+├─ studio/preview-spec/        # preview studio contract
+└─ .github/                    # PR template + schema validation workflow
 ```
 
-> หมายเหตุ: โฟลเดอร์ `videos/`, `frames/`, `annotations/` และไฟล์ `manifest.yaml`
-> ยังเป็นโครงสร้างเป้าหมาย (planned structure) ที่จะเพิ่มในลำดับถัดไป
-> เมื่อคลังข้อมูลเชิงภาพเริ่มถูกบันทึกจริง
+โครงสร้างนี้ถูกเพิ่มเพื่อให้ตำราสามารถใช้งานเชิงระบบได้จริง:
+- query ได้ด้วย manifest เชิงโครงสร้าง
+- map ภาษาศิลป์สู่ runtime parameter ผ่าน semantic layer
+- รองรับ retrieval/compile/governance/evaluation pipeline แบบตรวจสอบย้อนกลับได้
 
 ---
 

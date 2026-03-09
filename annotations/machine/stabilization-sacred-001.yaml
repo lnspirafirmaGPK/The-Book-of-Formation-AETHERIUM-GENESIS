@@ -1,0 +1,12 @@
+formation_id: stabilization-sacred-001
+human_narrative:
+  language: th
+  text: "โครงแสงนิ่งพอจะยึดการสนทนาให้มั่นคง"
+machine_semantics:
+  onset_speed: slow
+  expansion_curve: linear
+  turbulence: low
+  coherence: high
+  decay_tail: medium
+  notes:
+    - "preferred in trust-sensitive mode"

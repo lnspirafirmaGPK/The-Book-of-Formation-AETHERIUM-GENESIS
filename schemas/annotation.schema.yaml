@@ -1,0 +1,30 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+$id: "https://aetherium.local/schemas/annotation.schema.yaml"
+title: Formation Annotation
+type: object
+required:
+  - formation_id
+  - human_narrative
+  - machine_semantics
+properties:
+  formation_id:
+    type: string
+  human_narrative:
+    type: object
+    required: [language, text]
+    properties:
+      language: { type: string }
+      text: { type: string }
+  machine_semantics:
+    type: object
+    required: [onset_speed, expansion_curve, turbulence, coherence, decay_tail]
+    properties:
+      onset_speed: { type: string, enum: [slow, medium, fast] }
+      expansion_curve: { type: string, enum: [linear, sigmoid, exponential] }
+      turbulence: { type: string, enum: [low, medium, high] }
+      coherence: { type: string, enum: [low, medium, high] }
+      decay_tail: { type: string, enum: [short, medium, long] }
+      notes:
+        type: array
+        items: { type: string }
+additionalProperties: false
