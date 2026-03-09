@@ -1,0 +1,28 @@
+formation_id: emergence-soft-001
+phase: emergence
+archetype: soft-breathing-bloom
+emotion_tone: hopeful
+tempo: slow
+intensity_range: { min: 0.15, max: 0.45 }
+continuity_profile: continuous
+shader_bias:
+  glow_persistence: 0.75
+  pulse_envelope: 0.35
+particle_bias:
+  spawn_rate: 0.32
+  emitter_topology: spherical
+physics_bias:
+  turbulence_amplitude: 0.18
+  coherence_force: 0.76
+semantics:
+  human_narrative: "แสงค่อย ๆ รวบตัวเหมือนลมหายใจแรก ก่อนขยายออกอย่างอบอุ่น"
+  machine:
+    onset_speed: slow
+    expansion_curve: sigmoid
+    turbulence: low
+    coherence: high
+    decay_tail: long
+source_files:
+  - annotations/human/emergence-soft-001.md
+  - annotations/machine/emergence-soft-001.yaml
+version: v1.0.0

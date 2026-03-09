@@ -1,0 +1,45 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+$id: "https://aetherium.local/schemas/manifest.schema.yaml"
+title: Formations Manifest
+type: object
+required: [manifest_version, generated_at, formations]
+properties:
+  manifest_version:
+    type: string
+  generated_at:
+    type: string
+    format: date-time
+  formations:
+    type: array
+    items:
+      type: object
+      required: [formation_id, phase, archetype, version, source_files]
+      properties:
+        formation_id: { type: string }
+        phase: { type: string, enum: [emergence, stabilization, dissolution] }
+        archetype: { type: string }
+        emotion_tone: { type: string }
+        tempo: { type: string }
+        intensity_range:
+          type: object
+          required: [min, max]
+          properties:
+            min: { type: number }
+            max: { type: number }
+        continuity_profile: { type: string }
+        shader_bias:
+          type: object
+          additionalProperties: { type: number }
+        particle_bias:
+          type: object
+          additionalProperties: { type: number }
+        physics_bias:
+          type: object
+          additionalProperties: { type: number }
+        source_files:
+          type: array
+          items: { type: string }
+        author_note: { type: string }
+        provenance: { type: object }
+        version: { type: string }
+additionalProperties: false

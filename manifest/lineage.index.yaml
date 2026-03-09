@@ -1,0 +1,19 @@
+lineage_version: v1.0.0
+formations:
+  emergence-soft-001:
+    status: approved
+    parent: null
+    children:
+      - stabilization-sacred-001
+    history:
+      - version: v1.0.0
+        change_note: "Initial canonical emergence archetype"
+        approved_by: system-seed
+  stabilization-sacred-001:
+    status: draft
+    parent: emergence-soft-001
+    children: []
+    history:
+      - version: v1.0.0
+        change_note: "Derived for trust-sensitive stabilization"
+        approved_by: pending-review

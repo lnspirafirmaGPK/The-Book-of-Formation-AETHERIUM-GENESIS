@@ -1,0 +1,12 @@
+formation_id: emergence-soft-001
+human_narrative:
+  language: th
+  text: "แสงค่อย ๆ รวบตัวเหมือนลมหายใจแรก"
+machine_semantics:
+  onset_speed: slow
+  expansion_curve: sigmoid
+  turbulence: low
+  coherence: high
+  decay_tail: long
+  notes:
+    - "use for low urgency, high receptivity context"
