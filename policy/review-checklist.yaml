@@ -1,0 +1,22 @@
+# PR Review Checklist for The Book of Formation
+
+required_checks:
+  - id: SCHEMA_VALIDATION
+    description: "Must pass manifest and formation schema validation."
+  - id: LANGUAGE_DUALITY
+    description: "English machine fields vs Poetic Thai narratives checked."
+  - id: SEMANTIC_NORMALIZATION
+    description: "All numeric parameters must be within [0.0 - 1.0]."
+  - id: LINEAGE_INTEGRITY
+    description: "If derived_from exists, source_id must exist in manifest."
+  - id: ASSET_REFERENCE
+    description: "Source file paths must follow naming convention (even if placeholder)."
+  - id: ENUM_COMPLIANCE
+    description: "Archetype and curve names must exist in policy/allowed-enums.yaml."
+
+approval_gates:
+  - stage: DRAFT
+    required_reviewers: 1
+  - stage: CANONICAL
+    required_reviewers: 2
+    requires_expert_narrative_review: true

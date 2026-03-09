@@ -1,0 +1,77 @@
+# Formation Definition Schema
+# Purpose: Define the core structure for a Motion Archetype in The Book of Formation.
+type: object
+required:
+  - formation_id
+  - version
+  - status
+  - title
+  - metadata
+  - semantic_profile
+  - narrative
+  - lineage
+  - source_references
+properties:
+  formation_id:
+    type: string
+    description: "Stable identity (e.g., emergence-soft-001)"
+  version:
+    type: string
+    description: "Semantic revision (e.g., 1.0.0)"
+  status:
+    type: string
+    enum: [draft, review, canonical, deprecated, archived]
+  title:
+    type: object
+    required: [en, th]
+    properties:
+      en: { type: string }
+      th: { type: string }
+  metadata:
+    type: object
+    required: [phase, archetype]
+    properties:
+      phase: { type: string, enum: [emergence, stabilization, dissolution] }
+      archetype: { type: string }
+      emotion_tone: { type: string }
+      tempo: { type: string, enum: [static, slow, moderate, fast, dynamic] }
+      intensity_range: { type: array, items: { type: number, minimum: 0, maximum: 1 }, minItems: 2, maxItems: 2 }
+  semantic_profile:
+    type: object
+    description: "Normalized Machine-readable parameters (0.0 - 1.0)"
+    properties:
+      onset_speed: { type: number, minimum: 0, maximum: 1 }
+      expansion_rate: { type: number, minimum: 0, maximum: 1 }
+      coherence: { type: number, minimum: 0, maximum: 1 }
+      turbulence: { type: number, minimum: 0, maximum: 1 }
+      luminosity_persistence: { type: number, minimum: 0, maximum: 1 }
+      decay_tail: { type: number, minimum: 0, maximum: 1 }
+      volatility: { type: number, minimum: 0, maximum: 1 }
+      curves:
+        type: object
+        properties:
+          onset_curve: { type: string }
+          expansion_curve: { type: string }
+          decay_curve: { type: string }
+  narrative:
+    type: object
+    required: [th]
+    properties:
+      th: { type: string, description: "Poetic Thai description" }
+      en: { type: string, description: "Technical/narrative English summary" }
+  lineage:
+    type: object
+    properties:
+      derived_from: { type: string }
+      inspired_by: { type: array, items: { type: string } }
+      variant_of: { type: string }
+      supersedes: { type: string }
+  source_references:
+    type: array
+    items:
+      type: object
+      required: [path, role]
+      properties:
+        path: { type: string }
+        role: { type: string, enum: [primary_reference, keyframe, analysis_note, placeholder] }
+        status: { type: string, enum: [available, planned, placeholder] }

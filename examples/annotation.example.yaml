@@ -1,0 +1,21 @@
+# Example Annotation: Emergence Soft 001
+formation_id: emergence-soft-001
+
+human_narrative:
+  - timestamp: "00:00:02"
+    note_th: "อนุภาคเริ่มรวบตัวกันที่แกนกลางอย่างช้า ๆ"
+    note_en: "Particles begin to cluster slowly at the core."
+  - timestamp: "00:00:08"
+    note_th: "แสงเริ่มแผ่ออกเป็นวงกว้าง มีความสั่นไหวน้อยมาก"
+    note_en: "Luminosity expands with minimal jitter."
+
+machine_semantics:
+  - timestamp: "00:00:02"
+    parameters:
+      normalized_intensity: 0.15
+      active_vectors: ["radial_in", "core_attractor"]
+  - timestamp: "00:00:08"
+    parameters:
+      normalized_intensity: 0.38
+      active_vectors: ["spherical_expansion"]
+      trigger_events: ["peak_coherence_reached"]

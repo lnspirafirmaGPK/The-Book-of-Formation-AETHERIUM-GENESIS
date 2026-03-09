@@ -1,0 +1,43 @@
+# Example Formation Entry: Emergence Soft 001
+formation_id: emergence-soft-001
+version: 1.0.0
+status: canonical
+
+title:
+  en: "Soft Emergence of Luminous Coherence"
+  th: "การอุบัติอย่างนุ่มนวลแห่งเอกภาพเรืองแสง"
+
+metadata:
+  phase: emergence
+  archetype: soft_emergence
+  emotion_tone: "serene / calm"
+  tempo: slow
+  intensity_range: [0.1, 0.4]
+
+semantic_profile:
+  onset_speed: 0.18
+  expansion_rate: 0.35
+  coherence: 0.85
+  turbulence: 0.12
+  luminosity_persistence: 0.75
+  decay_tail: 0.60
+  volatility: 0.05
+  curves:
+    onset_curve: sigmoid_soft
+    expansion_curve: inhale
+    decay_curve: lingering_fade
+
+narrative:
+  th: "แสงมิได้พุ่งกำเนิด หากค่อยรวมตนราวลมหายใจแรกแห่งการตื่นรู้ เป็นการก่อตัวที่เนิบช้าแต่เปี่ยมด้วยความมั่นคงแห่งรูปทรง"
+  en: "A low-turbulence emergence with gradual coherence gain. The form gathers itself slowly, like a first breath of awareness, maintaining structural stability throughout its expansion."
+
+lineage:
+  inspired_by: ["canonical-void-essence-001"]
+
+source_references:
+  - path: "sources/video/emergence/soft-emergence-001.mp4"
+    role: primary_reference
+    status: placeholder
+  - path: "sources/stills/emergence/soft-emergence-001/keyframe-0120.png"
+    role: keyframe
+    status: placeholder

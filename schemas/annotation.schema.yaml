@@ -1,0 +1,31 @@
+# Annotation Schema
+# Purpose: Dual-layer semantics for human-narrative and machine-readable mapping.
+type: object
+required:
+  - formation_id
+  - human_narrative
+  - machine_semantics
+properties:
+  formation_id: { type: string }
+  human_narrative:
+    type: array
+    items:
+      type: object
+      required: [timestamp, note_th]
+      properties:
+        timestamp: { type: string, description: "e.g., 00:00:05" }
+        note_th: { type: string }
+        note_en: { type: string }
+  machine_semantics:
+    type: array
+    items:
+      type: object
+      required: [timestamp, parameters]
+      properties:
+        timestamp: { type: string }
+        parameters:
+          type: object
+          properties:
+            normalized_intensity: { type: number, minimum: 0, maximum: 1 }
+            active_vectors: { type: array, items: { type: string } }
+            trigger_events: { type: array, items: { type: string } }

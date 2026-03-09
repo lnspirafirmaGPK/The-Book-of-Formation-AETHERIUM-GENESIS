@@ -1,0 +1,31 @@
+formation_id: dissolution-whisper-001
+version: 0.1.0
+status: draft
+title:
+  en: "Whisper of Dissolution"
+  th: "เสียงกระซิบแห่งการสลายตัว"
+metadata:
+  phase: dissolution
+  archetype: whisper_dissolution
+  tempo: slow
+  intensity_range: [0.0, 0.2]
+semantic_profile:
+  onset_speed: 0.1
+  expansion_rate: 0.1
+  coherence: 0.4
+  turbulence: 0.2
+  luminosity_persistence: 0.9
+  decay_tail: 0.9
+  volatility: 0.1
+  curves:
+    onset_curve: linear
+    expansion_curve: exhale
+    decay_curve: lingering_fade
+narrative:
+  th: "การคืนสู่ความว่างเปล่าอย่างแผ่วเบา"
+lineage:
+  variant_of: stabilization-sacred-001
+source_references:
+  - path: "sources/video/dissolution/whisper-001.mp4"
+    role: primary_reference
+    status: placeholder

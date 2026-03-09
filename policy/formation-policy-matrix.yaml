@@ -1,0 +1,27 @@
+# Formation Policy Matrix
+# Governance rules for archetype usage in various internal states/contexts.
+
+context_mappings:
+  - state: calm
+    allowed_archetypes: [soft_emergence, sacred_stabilization, whisper_dissolution]
+    forbidden_archetypes: [vibrant_pulse]
+    constraints:
+      max_intensity: 0.4
+      max_turbulence: 0.3
+  - state: interaction_vibrant
+    allowed_archetypes: [vibrant_pulse, structural_unity]
+    forbidden_archetypes: [whisper_dissolution]
+    constraints:
+      min_intensity: 0.5
+  - state: trust_sensitive
+    allowed_archetypes: [sacred_stabilization, structural_unity]
+    forbidden_archetypes: [vibrant_pulse]
+    constraints:
+      min_coherence: 0.8
+      max_volatility: 0.2
+
+audit_requirements:
+  high_impact_changes:
+    - version_increment_major
+    - status_change_to_canonical
+    - archetype_modification

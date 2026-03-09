@@ -1,0 +1,20 @@
+# Global Formations Index
+repository_name: The Book of Formation
+last_updated: "2026-03-09T12:00:00Z"
+
+formations:
+  - formation_id: emergence-soft-001
+    path: formations/emergence-soft-001.yaml
+    status: canonical
+    version: 1.0.0
+    archetype: soft_emergence
+  - formation_id: stabilization-sacred-001
+    path: formations/stabilization-sacred-001.yaml
+    status: review
+    version: 0.9.2
+    archetype: sacred_stabilization
+  - formation_id: dissolution-whisper-001
+    path: formations/dissolution-whisper-001.yaml
+    status: draft
+    version: 0.1.0
+    archetype: whisper_dissolution
