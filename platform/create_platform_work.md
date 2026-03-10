@@ -1,151 +1,143 @@
 # CREATE_PLATFORM_WORK — AETHERIUM · GENESIS
 
-## Context
+## Structured Context (Single Source of Truth)
 - **Initiative:** AETHERIUM · GENESIS Platform Reliability & Knowledge Operations Upgrade
-- **Scope:** `specs/`, `policy/`, `manifest/`, `formations/`, `annotations/`, `evaluation/`, `platform/db/`
-- **Drivers:** reliability, latency, security, governance, developer experience
-- **Current state (as-is):** Canonical knowledge repository exists with schemas/specs, but cross-functional delivery planning and production-grade rollout controls are fragmented.
-- **Target state (to-be):** Unified operating model with measurable delivery backlog, reliability gates, benchmark gates, migration controls, and database-backed planning artifacts.
-- **Constraints:**
-  - P95 retrieval latency ≤ 120 ms
-  - Formation compile success rate ≥ 99.5%
-  - Zero critical policy violations in release candidate
-  - Timeline: 2 quarters
-  - Compliance: traceability for lineage/policy decisions
-- **Dependencies:** Runtime team, Platform SRE, Security Governance, Evaluation/QA, CI/CD maintainers
+- **Scope:** services / modules / infra across retrieval, compiler, policy, evaluation, and platform operations
+- **Drivers:** reliability, cost, latency, security, developer experience
+- **Current State (as-is):** Core schemas/specs exist, but production execution controls (gates, ownership, rollout state, risk tracking) are scattered.
+- **Target State (to-be):** A database-backed operating model with measurable release gates, explicit ownership, and reversible migration.
+- **Constraints:** P95 retrieval latency <= 120ms; compile success >= 99.5%; zero critical policy violations in RC; 2-quarter timeline; lineage traceability mandatory.
+- **Dependencies:** Runtime team, Platform SRE, Security Governance, QA/Evaluation, CI maintainers.
 
 ---
 
 ## 1) Workstreams
-
-### A. Architecture Workstream
-Design canonical integration boundaries among retrieval, compiler, adapter, and governance matrix.
-
-### B. Protocol Workstream
-Normalize contract versioning and backward-compatible payload semantics for retrieval/compiler/adapter interfaces.
-
-### C. Reliability Workstream
-Define SLOs, error budgets, failure-mode response patterns, and resilience test suites.
-
-### D. Benchmark Workstream
-Establish deterministic benchmark scenarios and quality/latency gates for release progression.
-
-### E. Ops Workstream
-Create observability baseline, on-call runbooks, release checklist, and incident playbooks.
-
-### F. Migration Workstream
-Introduce phased rollout/rollback plan from document-driven governance to database-backed operational tracking.
+1. **Architecture** — Define control-plane boundaries and artifact ownership.
+2. **Protocol** — Version compatibility rules for retrieval/compiler/adapter contracts.
+3. **Reliability** — SLO/error-budget governance and resilience tests.
+4. **Benchmark** — Deterministic benchmark suites and promotion gates.
+5. **Ops** — Observability, incident response, and runbook maturity.
+6. **Migration** — Phased adoption with rollback guarantees.
 
 ---
 
-## 2) Backlog (Epic → Story → Task + measurable acceptance criteria)
+## 2) Backlog (Epic -> Story -> Task with measurable acceptance criteria)
 
-## Epic 1 — Platform Planning Data Foundation
-### Story 1.1 — Persist delivery model in relational schema
-- **Task 1.1.1:** Create initiative/workstream/epic/story/task tables.
-  - **Acceptance Criteria:** Migration script applies cleanly; all tables include PK/FK and timestamp columns.
-- **Task 1.1.2:** Add gate, risk, rollout, and benchmark result entities.
-  - **Acceptance Criteria:** Referential integrity verified; seed data inserted without constraint violations.
+### Epic A — Control Plane Foundation
+**Story A1:** Persist work model as relational data.
+- **Task A1.1:** Create normalized tables for initiative/workstream/epic/story/task/gate/risk/rollout/benchmark.
+  - **Acceptance:** Migration applies without errors; FK and CHECK constraints validated; idempotent re-run passes.
+- **Task A1.2:** Seed baseline initiative data.
+  - **Acceptance:** Upsert seed produces 0 constraint violations and >= 95% non-null governance fields.
 
-### Story 1.2 — Operational traceability
-- **Task 1.2.1:** Track owner, status, due date, and confidence in task records.
-  - **Acceptance Criteria:** 100% of seeded tasks include owner, status, due date, confidence score, and measurable completion metric.
+**Story A2:** Remove duplicate planning artifacts.
+- **Task A2.1:** Consolidate overlapping planning notes into canonical records.
+  - **Acceptance:** Every active item maps to one canonical DB record ID and one canonical doc anchor.
 
-## Epic 2 — Reliability & Quality Gates
-### Story 2.1 — Define SLO guardrails
-- **Task 2.1.1:** Add SLO gate definitions (latency, reliability, policy compliance).
-  - **Acceptance Criteria:** Gate catalog includes threshold, measurement window, and pass/fail condition.
+### Epic B — Protocol & Compatibility Governance
+**Story B1:** Contract compatibility policy.
+- **Task B1.1:** Add compatibility strategy field (`backward`, `forward`, `breaking`) per protocol change.
+  - **Acceptance:** 100% of new protocol changes tagged; breaking changes require migration plan ID.
+- **Task B1.2:** Attach spec version references to work items.
+  - **Acceptance:** Each protocol story links to at least one spec path and version.
 
-### Story 2.2 — Enforce benchmark gate progression
-- **Task 2.2.1:** Register benchmark suite metadata and required pass thresholds.
-  - **Acceptance Criteria:** Release readiness fails when pass rate < 95% in critical scenarios.
+### Epic C — Reliability & SLO Gates
+**Story C1:** SLO gate definitions and enforcement.
+- **Task C1.1:** Register latency and compile-success gates.
+  - **Acceptance:** Retrieval P95 <= 120ms and compile success >= 99.5% computed from rolling 24h window.
+- **Task C1.2:** Define error-budget policy.
+  - **Acceptance:** Budget consumption alerts fire within 5 minutes of threshold breach.
 
-## Epic 3 — Migration & Rollout Operations
-### Story 3.1 — Controlled phased rollout
-- **Task 3.1.1:** Define phase sequence (canary, partial, full).
-  - **Acceptance Criteria:** Each phase has entry/exit criteria and rollback trigger.
-- **Task 3.1.2:** Publish rollback procedure with ownership.
-  - **Acceptance Criteria:** Time-to-rollback objective ≤ 15 minutes in incident simulation.
+### Epic D — Benchmark Readiness
+**Story D1:** Release benchmark gate.
+- **Task D1.1:** Track benchmark run results in DB.
+  - **Acceptance:** RC promotion blocked when critical scenario pass rate < 95%.
+- **Task D1.2:** Add regression tolerance policy.
+  - **Acceptance:** Performance regression > 3% triggers mandatory rollback decision review.
+
+### Epic E — Ops & Runbook Maturity
+**Story E1:** Observability and incident control.
+- **Task E1.1:** Dashboard for gate status, risk heatmap, and rollout phase.
+  - **Acceptance:** Dashboard refresh interval <= 60s; alert routes verified for Sev-1 and Sev-2.
+- **Task E1.2:** Publish runbooks and escalation matrix.
+  - **Acceptance:** Incident drill MTTR <= 15 minutes for rollback execution scenario.
+
+### Epic F — Migration Execution
+**Story F1:** Safe phased rollout.
+- **Task F1.1:** Execute Phase 0->3 adoption plan.
+  - **Acceptance:** Entry/exit criteria logged for every phase transition.
+- **Task F1.2:** Validate rollback from each phase.
+  - **Acceptance:** Rollback success >= 99% in simulation; data integrity checks pass post-rollback.
 
 ---
 
 ## 3) Recommendation (Options + tradeoffs + chosen)
 
-### Option A — Keep document-only planning
-- **Pros:** Low overhead, no schema maintenance.
-- **Cons:** Weak traceability, poor cross-team querying, manual consistency checks.
+### Option 1 — Document-only governance
+- **Pros:** Low setup effort.
+- **Cons:** Weak traceability, low automation, manual audit burden.
 
-### Option B — Database-backed planning model (Chosen)
-- **Pros:** Strong traceability, measurable governance, easy reporting/automation.
-- **Cons:** Requires migration scripts and ownership discipline.
+### Option 2 — Repository-native DB control plane (**Chosen**)
+- **Pros:** Strong auditability, measurable gates, automation-ready, aligned with version-controlled source-of-truth.
+- **Cons:** Requires schema ownership and migration discipline.
 
-### Option C — External SaaS planning tool only
-- **Pros:** Fast setup, rich UI.
-- **Cons:** Knowledge drift from repository source-of-truth, vendor coupling risk.
+### Option 3 — External planning SaaS
+- **Pros:** Fast UI adoption.
+- **Cons:** Knowledge drift risk and vendor lock-in.
 
-**Chosen approach: Option B**, because it keeps governance artifacts inside repository control while enabling measurable operations and automation.
+**Chosen:** Option 2 for best reliability/governance balance and minimal source-of-truth drift.
 
 ---
 
 ## 4) Risks, Failure Modes, Mitigations
-- **Risk:** Schema/process divergence from actual delivery.
-  - **Failure mode:** Data becomes stale and invalid for decision making.
-  - **Mitigation:** Weekly data quality check + CI lint for mandatory fields.
-- **Risk:** Overly strict gates delay delivery.
-  - **Failure mode:** Teams bypass process outside official flow.
-  - **Mitigation:** Progressive gate levels (warn → block) with clear waiver protocol.
-- **Risk:** Rollout ownership ambiguity.
-  - **Failure mode:** Slow incident response and prolonged user impact.
-  - **Mitigation:** Explicit owner mapping per phase and incident commander fallback.
+- **Risk:** Data staleness.
+  - **Failure Mode:** Decisions made on outdated rollout/gate state.
+  - **Mitigation:** Weekly freshness audit + CI check for untouched records > 14 days.
+- **Risk:** Gate friction causes bypass behavior.
+  - **Failure Mode:** Untracked exceptions and shadow releases.
+  - **Mitigation:** Tiered gates (warn -> block), expiring waivers, leadership review.
+- **Risk:** Ambiguous ownership during incident.
+  - **Failure Mode:** Slow rollback and higher user impact.
+  - **Mitigation:** Named owner + delegate per phase; incident commander default assignment.
 
 ---
 
-## 5) Rollout / Rollback Plan (owner + timeline)
+## 5) Rollout / Rollback Plan (Owner + Timeline)
 
-| Phase | Window | Owner | Entry Criteria | Exit Criteria | Rollback Trigger |
-|---|---:|---|---|---|---|
-| Phase 0: Baseline | Week 1 | Platform PM | Schema approved | Seed data available | Schema migration failure |
-| Phase 1: Canary | Week 2-3 | SRE Lead | 20% teams onboarded | No Sev-1/2 incident for 7 days | Gate integrity mismatch |
-| Phase 2: Partial | Week 4-6 | Eng Manager | 60% workstreams active | SLA reports generated weekly | Data freshness < 90% |
-| Phase 3: Full | Week 7-8 | Head of Platform | 100% active projects tracked | Quarterly audit passed | Critical compliance breach |
+| Phase | Timeline | Owner | Entry Criteria | Exit Criteria | Rollback Trigger |
+|---|---|---|---|---|---|
+| Phase 0: Baseline | Week 1 | Platform PM | Schema approved | Seed validated | Migration apply failure |
+| Phase 1: Canary | Week 2-3 | SRE Lead | 20% teams onboarded | No Sev-1/2 for 7 days | Gate integrity mismatch |
+| Phase 2: Partial | Week 4-6 | Eng Manager | 60% workstreams active | Weekly SLA reporting stable | Freshness < 90% |
+| Phase 3: Full | Week 7-8 | Head of Platform | 100% active tracking | Audit pass | Critical compliance breach |
 
-**Rollback objective:** Revert to last known-good schema snapshot + freeze write operations within 15 minutes.
+**Rollback Objective:** Freeze writes, restore last-known-good snapshot, and resume with validated read-only mode within 15 minutes.
 
 ---
 
 ## 6) Production Definition of Done
-- **Tests:**
-  - Schema validation test pass rate 100%
-  - Seed integrity checks pass
-- **SLO gates:**
-  - Retrieval P95 ≤ 120 ms
-  - Compile success ≥ 99.5%
-- **Benchmarking gates:**
-  - Critical scenario pass rate ≥ 95%
-  - Regression delta ≤ 3%
-- **Observability:**
-  - Dashboard for gate status, risk heatmap, rollout phase status
-  - Alerts for stale tasks (> 14 days without update)
-- **Runbooks:**
-  - Rollout and rollback runbooks published and versioned
-  - Incident response decision tree documented
-- **Security checks:**
-  - Policy matrix compliance validation
-  - Least-privilege DB roles for readers/writers/admins
+- **Tests:** schema migration tests, seed integrity tests, contract compatibility tests all pass at 100%.
+- **SLO Gates:** retrieval P95 <= 120ms; compile success >= 99.5% over rolling 24h.
+- **Benchmark Gates:** critical scenario pass rate >= 95%; regression delta <= 3%.
+- **Observability:** live dashboards + alerting wired for gate breach, stale records, incident states.
+- **Runbooks:** rollout/rollback + incident command procedures published and drill-validated.
+- **Security Checks:** policy matrix validation, least-privilege DB roles, audit log retention enabled.
 
 ---
 
-## Architecture / Protocol Update Outline
-1. Add database layer as planning control plane (non-runtime).
-2. Attach spec version references to each task/epic.
-3. Add contract compatibility field for retrieval/compiler/adapter changes.
-4. Link benchmark outcomes to release gate decisions.
-5. Record policy exceptions with expiry and owner.
+## 7) Architecture / Protocol Update Outline
+1. Introduce a non-runtime planning control-plane database.
+2. Link every backlog item to spec and contract versions.
+3. Require compatibility classification for protocol changes.
+4. Persist benchmark outcomes as promotion evidence.
+5. Store exception/waiver records with owner + expiry.
 
+---
 
-## 7) Future Extensions (clear separation from active scope)
-- **Scenario Preset Library:** `strict_governance`, `balanced_delivery`, `fast_track_research` presets for rollout/gate defaults.
-- **Auto-Generated Gate Reports:** CI publishes machine-readable release gate snapshots on every RC tag.
-- **Lineage Impact Assistant:** Generate impact report when a formation policy or contract changes.
-
-These items are intentionally outside the active delivery scope above to avoid mixing planned and implemented capabilities.
+## 8) Reliability & Ops Readiness Checklist
+- [ ] SLO queries validated against production-like telemetry.
+- [ ] Release gates enforced in CI/CD.
+- [ ] Incident alert routes tested (primary + fallback).
+- [ ] Rollback drill completed with <= 15m target.
+- [ ] Security review signed off for DB roles and access paths.
+- [ ] Data duplication removed; canonical IDs referenced by docs.
