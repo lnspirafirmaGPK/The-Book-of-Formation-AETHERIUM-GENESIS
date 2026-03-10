@@ -1,15 +1,6 @@
-# Preview Studio / Formation Sandbox Spec
+# Preview Studio Spec Pointer
 
-## Core panels
-- Formation list
-- Timeline scrubber
-- A/B archetype compare
-- Live parameter tweak
-- Semantic note panel
-- Intent input simulator
-- Generated bias preview
+This document is intentionally minimal to avoid duplicate specifications.
 
-## Integration points
-- Reads from `manifest/formations.index.yaml`
-- Calls retrieval engine spec for candidate generation
-- Calls compiler spec for live payload preview
+- Canonical specification: `specs/preview-studio-spec.md`
+- Rationale: keep a single source of truth for Preview Studio requirements and integration details.
