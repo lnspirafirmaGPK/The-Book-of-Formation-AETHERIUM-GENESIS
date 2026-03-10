@@ -20,19 +20,21 @@ CREATE TABLE workstreams (
   description TEXT NOT NULL,
   owner TEXT,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE (initiative_id, id)
 );
 
 CREATE TABLE epics (
   id TEXT PRIMARY KEY,
   initiative_id TEXT NOT NULL REFERENCES initiatives(id) ON DELETE CASCADE,
-  workstream_id TEXT REFERENCES workstreams(id) ON DELETE SET NULL,
+  workstream_id TEXT,
   title TEXT NOT NULL,
   objective TEXT NOT NULL,
   status TEXT NOT NULL CHECK (status IN ('planned', 'active', 'blocked', 'done')),
   owner TEXT,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (initiative_id, workstream_id) REFERENCES workstreams(initiative_id, id)
 );
 
 CREATE TABLE stories (
@@ -109,3 +111,48 @@ CREATE TABLE benchmark_results (
   passed BOOLEAN NOT NULL,
   measured_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE OR REPLACE FUNCTION touch_updated_at_timestamp()
+RETURNS TRIGGER AS $$
+BEGIN
+  EXECUTE format('UPDATE %I SET updated_at = CURRENT_TIMESTAMP WHERE id = $1', TG_TABLE_NAME)
+  USING NEW.id;
+  RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER initiatives_update_timestamp
+AFTER UPDATE ON initiatives
+FOR EACH ROW
+WHEN (NEW.updated_at = OLD.updated_at)
+EXECUTE FUNCTION touch_updated_at_timestamp();
+
+CREATE TRIGGER workstreams_update_timestamp
+AFTER UPDATE ON workstreams
+FOR EACH ROW
+WHEN (NEW.updated_at = OLD.updated_at)
+EXECUTE FUNCTION touch_updated_at_timestamp();
+
+CREATE TRIGGER epics_update_timestamp
+AFTER UPDATE ON epics
+FOR EACH ROW
+WHEN (NEW.updated_at = OLD.updated_at)
+EXECUTE FUNCTION touch_updated_at_timestamp();
+
+CREATE TRIGGER stories_update_timestamp
+AFTER UPDATE ON stories
+FOR EACH ROW
+WHEN (NEW.updated_at = OLD.updated_at)
+EXECUTE FUNCTION touch_updated_at_timestamp();
+
+CREATE TRIGGER tasks_update_timestamp
+AFTER UPDATE ON tasks
+FOR EACH ROW
+WHEN (NEW.updated_at = OLD.updated_at)
+EXECUTE FUNCTION touch_updated_at_timestamp();
+
+CREATE TRIGGER risks_update_timestamp
+AFTER UPDATE ON risks
+FOR EACH ROW
+WHEN (NEW.updated_at = OLD.updated_at)
+EXECUTE FUNCTION touch_updated_at_timestamp();

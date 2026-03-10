@@ -44,6 +44,11 @@ The-Book-of-Formation-AETHERIUM-GENESIS/
 ├─ policy/            # กฎเกณฑ์ Governance และ Matrix การใช้งาน
 ├─ specs/             # Technical Contracts (Compiler, Retrieval, Adapter)
 ├─ examples/          # ตัวอย่างการเขียนข้อมูลที่ถูกต้อง
+├─ platform/
+│  ├─ create_platform_work.md          # Workstreams, backlog, options, risks, rollout/rollback, DoD
+│  └─ db/
+│     ├─ platform_work_schema.sql      # Initiative/Epic/Story/Task/Gates/Risks schema
+│     └─ seed_aetherium_genesis.sql    # Re-runnable seed data for AETHERIUM GENESIS planning
 └─ .github/workflows/ # ระบบ Content Validation อัตโนมัติ
 ```
 

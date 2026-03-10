@@ -49,7 +49,7 @@ Introduce phased rollout/rollback plan from document-driven governance to databa
 
 ### Story 1.2 — Operational traceability
 - **Task 1.2.1:** Track owner, status, due date, and confidence in task records.
-  - **Acceptance Criteria:** 100% of seed tasks include owner + status + measurable completion metric.
+  - **Acceptance Criteria:** 100% of seeded tasks include owner, status, due date, confidence score, and measurable completion metric.
 
 ## Epic 2 — Reliability & Quality Gates
 ### Story 2.1 — Define SLO guardrails
