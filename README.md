@@ -101,3 +101,20 @@ psql -v ON_ERROR_STOP=1 -f platform/db/platform_work_schema.sql
 psql -v ON_ERROR_STOP=1 -f platform/db/seed_aetherium_genesis.sql
 ```
 
+
+---
+
+## 8) psql Connection Setup
+
+```bash
+# Load defaults for PostgreSQL client environment variables
+source platform/db/psql.env.example
+
+# Or run with auto-defaults (localhost:5432, postgres/postgres)
+./scripts/psql-connect.sh
+
+# Direct command style
+psql -h "$PGHOST" -U "$PGUSER" -d "$PGDATABASE"
+```
+
+If your server requires password auth, define `PGPASSWORD` before connecting.
