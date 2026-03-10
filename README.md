@@ -59,6 +59,19 @@ Repository นี้เป็น **Knowledge Layer** (ไม่มี executable
 
 ---
 
+
+## Platform Work Planning System (New)
+
+เพื่อรองรับการปรับปรุงระบบเชิงโครงสร้าง ได้เพิ่มชุดเอกสารและฐานข้อมูลสำหรับวางแผนงานแบบวัดผลได้:
+
+- `platform/create_platform_work.md`: Workstreams, backlog, options, risks, rollout/rollback, Definition of Done
+- `platform/db/platform_work_schema.sql`: โครงสร้างฐานข้อมูลสำหรับ Initiative/Epic/Story/Task/Gates/Risks
+- `platform/db/seed_aetherium_genesis.sql`: ข้อมูลตั้งต้นสำหรับโครงการ AETHERIUM GENESIS
+
+แนวทางนี้ช่วยลดข้อมูลซ้ำซ้อนในการติดตามงาน และทำให้มีแหล่งข้อมูลความจริงหนึ่งเดียว (single source of truth) สำหรับการดำเนินงาน.
+
+---
+
 ## หลักการในการเพิ่มเนื้อหา (Ingestion Principles)
 
 การเพิ่ม Formation ใหม่ต้องผ่านขั้นตอนดังนี้:
