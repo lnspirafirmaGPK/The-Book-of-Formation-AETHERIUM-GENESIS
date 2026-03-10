@@ -141,3 +141,11 @@ Introduce phased rollout/rollback plan from document-driven governance to databa
 3. Add contract compatibility field for retrieval/compiler/adapter changes.
 4. Link benchmark outcomes to release gate decisions.
 5. Record policy exceptions with expiry and owner.
+
+
+## 7) Future Extensions (clear separation from active scope)
+- **Scenario Preset Library:** `strict_governance`, `balanced_delivery`, `fast_track_research` presets for rollout/gate defaults.
+- **Auto-Generated Gate Reports:** CI publishes machine-readable release gate snapshots on every RC tag.
+- **Lineage Impact Assistant:** Generate impact report when a formation policy or contract changes.
+
+These items are intentionally outside the active delivery scope above to avoid mixing planned and implemented capabilities.

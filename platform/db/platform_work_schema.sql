@@ -1,6 +1,7 @@
 -- AETHERIUM GENESIS planning/control-plane schema
+-- PostgreSQL-compatible and safe to re-run.
 
-CREATE TABLE initiatives (
+CREATE TABLE IF NOT EXISTS initiatives (
   id TEXT PRIMARY KEY,
   name TEXT NOT NULL,
   scope TEXT NOT NULL,
@@ -13,18 +14,17 @@ CREATE TABLE initiatives (
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE workstreams (
+CREATE TABLE IF NOT EXISTS workstreams (
   id TEXT PRIMARY KEY,
   initiative_id TEXT NOT NULL REFERENCES initiatives(id) ON DELETE CASCADE,
   name TEXT NOT NULL,
   description TEXT NOT NULL,
   owner TEXT,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  UNIQUE (initiative_id, id)
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE epics (
+CREATE TABLE IF NOT EXISTS epics (
   id TEXT PRIMARY KEY,
   initiative_id TEXT NOT NULL REFERENCES initiatives(id) ON DELETE CASCADE,
   workstream_id TEXT,
@@ -37,7 +37,10 @@ CREATE TABLE epics (
   FOREIGN KEY (initiative_id, workstream_id) REFERENCES workstreams(initiative_id, id)
 );
 
-CREATE TABLE stories (
+CREATE UNIQUE INDEX IF NOT EXISTS ux_workstreams_initiative_id_id
+  ON workstreams (initiative_id, id);
+
+CREATE TABLE IF NOT EXISTS stories (
   id TEXT PRIMARY KEY,
   epic_id TEXT NOT NULL REFERENCES epics(id) ON DELETE CASCADE,
   title TEXT NOT NULL,
@@ -48,7 +51,7 @@ CREATE TABLE stories (
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE tasks (
+CREATE TABLE IF NOT EXISTS tasks (
   id TEXT PRIMARY KEY,
   story_id TEXT NOT NULL REFERENCES stories(id) ON DELETE CASCADE,
   title TEXT NOT NULL,
@@ -63,7 +66,7 @@ CREATE TABLE tasks (
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE quality_gates (
+CREATE TABLE IF NOT EXISTS quality_gates (
   id TEXT PRIMARY KEY,
   initiative_id TEXT NOT NULL REFERENCES initiatives(id) ON DELETE CASCADE,
   gate_type TEXT NOT NULL CHECK (gate_type IN ('test', 'slo', 'benchmark', 'security', 'observability', 'runbook')),
@@ -75,7 +78,7 @@ CREATE TABLE quality_gates (
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE risks (
+CREATE TABLE IF NOT EXISTS risks (
   id TEXT PRIMARY KEY,
   initiative_id TEXT NOT NULL REFERENCES initiatives(id) ON DELETE CASCADE,
   risk_text TEXT NOT NULL,
@@ -88,7 +91,7 @@ CREATE TABLE risks (
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE rollout_phases (
+CREATE TABLE IF NOT EXISTS rollout_phases (
   id TEXT PRIMARY KEY,
   initiative_id TEXT NOT NULL REFERENCES initiatives(id) ON DELETE CASCADE,
   phase_name TEXT NOT NULL,
@@ -98,10 +101,11 @@ CREATE TABLE rollout_phases (
   exit_criteria TEXT NOT NULL,
   rollback_trigger TEXT NOT NULL,
   phase_order INT NOT NULL,
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE (initiative_id, phase_order)
 );
 
-CREATE TABLE benchmark_results (
+CREATE TABLE IF NOT EXISTS benchmark_results (
   id TEXT PRIMARY KEY,
   initiative_id TEXT NOT NULL REFERENCES initiatives(id) ON DELETE CASCADE,
   scenario_id TEXT NOT NULL,
@@ -115,44 +119,43 @@ CREATE TABLE benchmark_results (
 CREATE OR REPLACE FUNCTION touch_updated_at_timestamp()
 RETURNS TRIGGER AS $$
 BEGIN
-  EXECUTE format('UPDATE %I SET updated_at = CURRENT_TIMESTAMP WHERE id = $1', TG_TABLE_NAME)
-  USING NEW.id;
-  RETURN NULL;
+  NEW.updated_at = CURRENT_TIMESTAMP;
+  RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS initiatives_update_timestamp ON initiatives;
 CREATE TRIGGER initiatives_update_timestamp
-AFTER UPDATE ON initiatives
+BEFORE UPDATE ON initiatives
 FOR EACH ROW
-WHEN (NEW.updated_at = OLD.updated_at)
 EXECUTE FUNCTION touch_updated_at_timestamp();
 
+DROP TRIGGER IF EXISTS workstreams_update_timestamp ON workstreams;
 CREATE TRIGGER workstreams_update_timestamp
-AFTER UPDATE ON workstreams
+BEFORE UPDATE ON workstreams
 FOR EACH ROW
-WHEN (NEW.updated_at = OLD.updated_at)
 EXECUTE FUNCTION touch_updated_at_timestamp();
 
+DROP TRIGGER IF EXISTS epics_update_timestamp ON epics;
 CREATE TRIGGER epics_update_timestamp
-AFTER UPDATE ON epics
+BEFORE UPDATE ON epics
 FOR EACH ROW
-WHEN (NEW.updated_at = OLD.updated_at)
 EXECUTE FUNCTION touch_updated_at_timestamp();
 
+DROP TRIGGER IF EXISTS stories_update_timestamp ON stories;
 CREATE TRIGGER stories_update_timestamp
-AFTER UPDATE ON stories
+BEFORE UPDATE ON stories
 FOR EACH ROW
-WHEN (NEW.updated_at = OLD.updated_at)
 EXECUTE FUNCTION touch_updated_at_timestamp();
 
+DROP TRIGGER IF EXISTS tasks_update_timestamp ON tasks;
 CREATE TRIGGER tasks_update_timestamp
-AFTER UPDATE ON tasks
+BEFORE UPDATE ON tasks
 FOR EACH ROW
-WHEN (NEW.updated_at = OLD.updated_at)
 EXECUTE FUNCTION touch_updated_at_timestamp();
 
+DROP TRIGGER IF EXISTS risks_update_timestamp ON risks;
 CREATE TRIGGER risks_update_timestamp
-AFTER UPDATE ON risks
+BEFORE UPDATE ON risks
 FOR EACH ROW
-WHEN (NEW.updated_at = OLD.updated_at)
 EXECUTE FUNCTION touch_updated_at_timestamp();
