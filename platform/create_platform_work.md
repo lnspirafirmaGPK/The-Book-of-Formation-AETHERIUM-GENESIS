@@ -108,7 +108,7 @@
 |---|---|---|---|---|---|
 | Phase 0: Baseline | Week 1 | Platform PM | Schema approved | Seed validated | Migration apply failure |
 | Phase 1: Canary | Week 2-3 | SRE Lead | 20% teams onboarded | No Sev-1/2 for 7 days | Gate integrity mismatch |
-| Phase 2: Partial | Week 4-6 | Eng Manager | 60% workstreams active | Meets defined SLOs for data freshness and latency for 2 consecutive weeks | Data freshness < 90% measured as percent of records updated within 24 hours (7-day rolling average) |
+| Phase 2: Partial | Week 4-6 | Eng Manager | 60% workstreams active | Data freshness >= 90% measured as percent of records updated within 24 hours (7-day rolling average) and defined latency SLO met for 2 consecutive weeks | Data freshness < 90% measured as percent of records updated within 24 hours (7-day rolling average) |
 | Phase 3: Full | Week 7-8 | Head of Platform | 100% active tracking | Audit pass | Critical compliance breach |
 
 **Rollback Objective:** Freeze writes, restore last-known-good snapshot, and resume with validated read-only mode within 15 minutes.
